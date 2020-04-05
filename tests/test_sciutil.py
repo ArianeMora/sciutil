@@ -34,7 +34,7 @@ class TestSciUtil(unittest.TestCase):
         self.sciutil.err_p(["Test printing error message: test", 3])
 
     def test_get_date_str(self):
-        assert self.sciutil.get_date_str() == date.today().strftime(("%Y%m%d"))
+        self.assertEqual(self.sciutil.get_date_str(), date.today().strftime(("%Y%m%d")))
 
     def test_generate_label(self):
         date_str = date.today().strftime(("%Y%m%d"))
