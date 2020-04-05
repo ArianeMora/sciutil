@@ -39,9 +39,7 @@ def print_help():
 
 
 def main(args=None):
-    parser = argparse.ArgumentParser(description='Compute a phylogenetic '
-                                                 'distance matrix for a given '
-                                                 'newick tree.')
+    parser = argparse.ArgumentParser(description='Utility functions for sci* packages')
     parser.add_argument('help', type=str, help='Prints help descriptions')
     parser.add_argument('version', type=str, help='Prints the version of sciutil')
 
