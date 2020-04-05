@@ -29,7 +29,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-class Sciutil:
+class SciUtil:
 
     def __init__(self, fig_dir=None, data_dir=None, debug_on=True, plot_on=True, warn_color=bcolors.WARNING,
                  err_color=bcolors.FAIL, msg_color=bcolors.OKBLUE, sep="\t", user_date=None, save_fig=True):
@@ -49,6 +49,7 @@ class Sciutil:
         msg = ""
         for i in msg_lst:
             msg += str(i) + sep
+
         print(color + "-" * 80 + bcolors.ENDC)
         print(color + msg.center(80, ' ') + bcolors.ENDC)
         print(color + '-' * 80 + bcolors.ENDC)
@@ -68,15 +69,12 @@ class Sciutil:
         -------
 
         """
-        if not color:
+        if color is None:
             color = self.warn_color
-        if not sep:
+        if sep is None:
             sep = self.sep
+        self.print_msg(msg_lst, sep, color)
 
-        self.print_msg(msg_lst, color, sep)
-
-
-    @staticmethod
     def err_p(self, msg_lst, sep=None, color=None):
         """
         Prints an error message. ToDo: Extend this to print to a log file as well.
@@ -92,12 +90,12 @@ class Sciutil:
         -------
 
         """
-        if not color:
+        if color is None:
             color = self.err_color
-        if not sep:
+        if sep is None:
             sep = self.sep
 
-        self.print_msg(msg_lst, color, sep)
+        self.print_msg(msg_lst, sep, color)
 
     def dp(self, msg_lst, sep=None, color=None):
         """
@@ -114,12 +112,12 @@ class Sciutil:
 
         """
         if self.debug_on:
-            if not sep:
+            if sep is None:
                 sep = self.sep
-            if not color:
+            if color is None:
                 color = self.msg_color
 
-            self.print_msg(msg_lst, color, sep)
+            self.print_msg(msg_lst, sep, color)
 
     def get_date_str(self):
         """
@@ -198,11 +196,11 @@ class Sciutil:
         date_time = self.get_date_str()
         label = ''
         for l in label_lst:
-            if l[-1] != '/':
+            if isinstance(l, str) and l[-1] != '/':
                 label += str(l) + sep
             else:
                 label += str(l)
-        label += date_time
+        label += sep + date_time
         return label + postfix
 
     def save_svg(self, plt, label_lst):

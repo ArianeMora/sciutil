@@ -46,7 +46,7 @@ setup(name='sciutil',
               'sciutil = sciutil.__main__:main'
           ]
       },
-      install_requires=[],
+      install_requires=['pandas'],
       python_requires='>=3.6',
       data_files=[("", ["LICENSE"])]
       )
