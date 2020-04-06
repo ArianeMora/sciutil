@@ -1,6 +1,9 @@
 # IDE & mac
 *.DS*
 *.idea*
+*egg*
+dist*
+build*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

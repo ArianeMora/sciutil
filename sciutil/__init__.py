@@ -1,4 +1,4 @@
-__title__ = 'sciuil'
+__title__ = 'sciutil'
 __description__ = 'A set of utility functions for the sci-packages.'
 __url__ = 'https://github.com/arianemora/sciutil'
 __version__ = '1.0.0'

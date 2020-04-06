@@ -17,7 +17,7 @@
 import argparse
 from sciutil import __version__
 import sys
-from sciutil.sciutil import bcolors
+from sciutil.util import bcolors
 
 
 def print_help():
@@ -30,10 +30,10 @@ def print_help():
              '\t  get_date_str(): returns the current date string as yyyymmdd',
              '\t  save_df_json(df:pd.DataFrame, output_file:str, keep_index_b=False:Boolean): '
              'saves a dataframe (default no index)',
-             '\t save_plt(fig:matplotlib.plt, output_path:str, dpi=100:int): saves a figure as a PNG',
-             '\t generate_label(label_lst:list, postfix="":str, sep="_":str): generates a label with the date string '
+             '\t  save_plt(fig:matplotlib.plt, output_path:str, dpi=100:int): saves a figure as a PNG',
+             '\t  generate_label(label_lst:list, postfix="":str, sep="_":str): generates a label with the date string '
              'postfix is the ending e.g. .csv, separator is the separator for elements in the list ',
-             '\t save_svg(fig:matplotlib.plt, label_lst:list, dpi=100:int): saves a figure as a PNG'
+             '\t  save_svg(fig:matplotlib.plt, label_lst:list, dpi=100:int): saves a figure as a PNG'
              ]
     print('\n'.join(lines))
 
@@ -51,3 +51,7 @@ def main(args=None):
         sys.exit(0)
     else:
         print_help()
+
+
+if __name__ == "__main__":
+    main()
