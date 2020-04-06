@@ -15,7 +15,7 @@
 #                                                                             #
 ###############################################################################
 import unittest
-from sciutil.util import SciUtil
+from sciutil import SciUtil
 from datetime import date
 
 

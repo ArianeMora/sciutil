@@ -178,7 +178,7 @@ class SciUtil:
         -------
 
         """
-        fig.savefig(name, format = "png", bbox_inches = 'tight', pad_inches = 0, dpi=dpi)
+        fig.savefig(name, format="png", bbox_inches='tight', pad_inches=0, dpi=dpi)
 
     def generate_label(self, label_lst, postfix='', sep='_'):
         """
