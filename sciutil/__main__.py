@@ -20,7 +20,7 @@ import sys
 from sciutil.util import bcolors
 
 
-def print_help():
+def print_help() -> None:
     lines = [f'sciutil {__version__}',
              'usage: [--help] [--version]',
              'sciutil provides utility functions used across the sci* packages.',

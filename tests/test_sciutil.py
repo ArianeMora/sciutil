@@ -31,11 +31,20 @@ class TestSciUtil(unittest.TestCase):
         self.sciutil.warn_p(["Test printing warning message: test", 2])
 
     def test_err_p(self):
-        self.sciutil.err_p(["Test printing error message: test", 3])
+        self.sciutil.err_p(["Test printing error message: test", 3], sep='|')
 
     def test_get_date_str(self):
         self.assertEqual(self.sciutil.get_date_str(), date.today().strftime(("%Y%m%d")))
 
     def test_generate_label(self):
         date_str = date.today().strftime(("%Y%m%d"))
-        assert self.sciutil.generate_label(['l1', 2], '.csv') == f'l1_2_{date_str}.csv'
+        self.assertEqual(self.sciutil.generate_label(['l1', 2], '.csv'),
+                         f'l1_2_{date_str}.csv')
+
+    def test_check_dir_format(self):
+        
+        dir_str_good = 'adir' + self.sciutil.dir_sep
+        self.assertEqual(dir_str_good, self.sciutil.check_dir_format(dir_str_good))
+
+        dir_str_bad = 'adir'
+        self.assertEqual(dir_str_good, self.sciutil.check_dir_format(dir_str_bad))
