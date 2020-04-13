@@ -31,7 +31,7 @@ class TestSciUtil(unittest.TestCase):
         self.sciutil = SciUtil()
         self.biomart = Biomart()
         # Setup temp dir
-        self.local = True
+        self.local = False
         if not self.local:
             self.tmp_dir = tempfile.mkdtemp(prefix='scidatannotate_tmp_')
         else:
