@@ -13,6 +13,31 @@ class Biomart:
         self.gene_annot_dict = None
         self.ens_to_name = None
 
+    def build_add_metadata(self, df: pd.DataFrame, organism_lbl: str, ensembl_id_lbl: str, output_dir: str, gene_ids=None):
+        """
+        Wrapper around the other methods so you can make the calls in one line.
+        Builds the metadata info and saves the information to a file before generating the data dictionary.
+        Parameters
+        ----------
+        df
+        organism_lbl
+        ensembl_id_lbl
+        output_dir
+        gene_ids
+
+        Returns
+        -------
+
+        """
+        if gene_ids is None:
+            gene_ids = []
+            for g in df[ensembl_id_lbl].values:
+                gene_ids.append(g)
+
+        gene_info_file, meta_df = self.build_gene_info_file(organism_lbl, gene_ids, output_dir)
+        self.build_gene_annot_dict(gene_info_file)
+        return self.add_gene_metadata_to_df(df)
+
     def build_gene_info_file(self, organism_lbl: str, gene_ids: list, output_dir: str, print_info=False) -> Tuple[str, pd.DataFrame]:
         """
         https://jrderuiter.github.io/pybiomart/

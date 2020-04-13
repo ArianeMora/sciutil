@@ -40,7 +40,7 @@ setup(name='sciutil',
           'Topic :: Scientific/Engineering :: Bio-Informatics',
       ],
       keywords='util',
-      packages=['sciutil'],
+      packages=['sciutil', 'pybiomart', 'pandas'],
       entry_points={
           'console_scripts': [
               'sciutil = sciutil.__main__:main'
