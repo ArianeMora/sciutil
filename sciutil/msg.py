@@ -30,3 +30,8 @@ class Msg:
         req_str = '\n'.join(req)
         return f'ERR in function: {func}\n' \
                f'For argument ({arg_name}) you passed: {value}, while {arg_name} must be one of: \n{req_str}.'
+
+    @staticmethod
+    def msg_file_not_found(func: str, filename: str) -> str:
+        return f'ERR in function: {func}\n' \
+               f'File: {filename} does not exist.'
