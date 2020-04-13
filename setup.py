@@ -40,13 +40,13 @@ setup(name='sciutil',
           'Topic :: Scientific/Engineering :: Bio-Informatics',
       ],
       keywords='util',
-      packages=['sciutil', 'pybiomart', 'pandas'],
+      packages=['sciutil'],
       entry_points={
           'console_scripts': [
               'sciutil = sciutil.__main__:main'
           ]
       },
-      install_requires=[],
+      install_requires=['pybiomart', 'pandas'],
       python_requires='>=3.6',
       data_files=[("", ["LICENSE"])]
       )
