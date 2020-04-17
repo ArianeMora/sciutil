@@ -88,3 +88,12 @@ class TestSciUtil(unittest.TestCase):
         annot_df = self.biomart.build_add_metadata(df, 'hsapiens_gene_ensembl', 'id', self.tmp_dir, gene_ids)
         self.assertEqual(annot_df.values[0][2], 'PRG3')
         self.assertEqual(annot_df.values[0][1], 2.88)
+
+    def test_build_roi(self):
+        gene_ids = ['ENSG00000156575', 'ENSG00000116745']
+        file_path = self.sciutil.generate_label([self.tmp_dir, "gene_info"], ".tsv")
+        df = pd.DataFrame()
+        df['id'] = ['ENSG00000156575']
+        df['sample_1'] = [2.88]
+        annot_df = self.biomart.build_add_metadata(df, 'hsapiens_gene_ensembl', 'id', self.tmp_dir, gene_ids)
+        print(self.biomart.build_roi())

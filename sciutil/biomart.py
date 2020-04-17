@@ -38,7 +38,7 @@ class Biomart:
         self.build_gene_annot_dict(gene_info_file)
         return self.add_gene_metadata_to_df(df)
 
-    def build_gene_info_file(self, organism_lbl: str, gene_ids: list, output_dir: str, print_info=False) -> Tuple[str, pd.DataFrame]:
+    def build_gene_info_file(self, organism_lbl: str, gene_ids: None, output_dir: '.', print_info=False) -> Tuple[str, pd.DataFrame]:
         """
         https://jrderuiter.github.io/pybiomart/
 
@@ -54,8 +54,9 @@ class Biomart:
         """
         cut_gene_ids = []
         # we ned to remove the version if it exists
-        for g in gene_ids:
-            cut_gene_ids.append(g.split('.')[0])
+        if gene_ids is not None and len(gene_ids) > 0:
+            for g in gene_ids:
+                cut_gene_ids.append(g.split('.')[0])
         server = Server(host='http://www.ensembl.org')
 
         dataset = (server.marts['ENSEMBL_MART_ENSEMBL'].datasets[organism_lbl])
@@ -64,10 +65,17 @@ class Biomart:
             print(dataset.list_filters())
             print('\n'.join(list(dataset.list_attributes().values[:, 0])))
 
-        gene_info_df = dataset.query(attributes=["ensembl_gene_id", "external_gene_name",  "percentage_gene_gc_content",
-                                  "chromosome_name", "start_position","end_position", "strand", "go_id",
-                                  "entrezgene_id"],
-                      filters={'link_ensembl_gene_id': cut_gene_ids})
+        if len(cut_gene_ids) > 0:
+            gene_info_df = dataset.query(attributes=["ensembl_gene_id", "external_gene_name",  "percentage_gene_gc_content",
+                                      "chromosome_name", "start_position","end_position", "strand", "go_id",
+                                      "entrezgene_id"],
+                          filters={'link_ensembl_gene_id': cut_gene_ids})
+        else:
+            # This will run for longer as we're getting all genes
+            gene_info_df = dataset.query(
+                attributes=["ensembl_gene_id", "external_gene_name", "percentage_gene_gc_content",
+                            "chromosome_name", "start_position", "end_position", "strand", "go_id",
+                            "entrezgene_id"])
         output_path = self.u.generate_label([output_dir, "gene_info"], ".tsv")
         # Save this to a tsv file
         self.u.save_df(gene_info_df, output_path, sep='\t')
