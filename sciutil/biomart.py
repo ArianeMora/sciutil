@@ -112,7 +112,7 @@ class Biomart:
                             strand = int(line[strand_idx].strip())
                             ncbi = line[ncbi_idx].strip()
                             # Check if we've already added it
-                            gene = gene_dict.get(g_id)
+                            gene = gene_dict.get(ens_id)
                             if gene:
                                 # Check if we have the same chrom
                                 if gene['chr'] == chrom:
@@ -131,21 +131,32 @@ class Biomart:
                                         start_err += 1
                                 else:
                                     chr_err += 1
+                                    gene_dict[ens_id]['chrs'].append(chrom)
+                                    if len(chrom) < len(gene_dict[ens_id]['chr']):
+                                        gene_dict[ens_id]['start'] = start
+                                        gene_dict[ens_id]['end'] = end
+                                        gene_dict[ens_id]['direction'] = strand
+                                        if len(go_term) > 1 and len(go_term.split(':')) > 1 and 'GO' in go_term:
+                                            if go_term not in gene_dict[ens_id]['go_terms']:
+                                                gene_dict[ens_id]['go_terms'].append(
+                                                    int(go_term.split(':')[1]))  # go_term.split('/')[-1])
 
                             else:
                                 ens_to_name[ens_id] = g_id
-                                gene_dict[g_id] = {
+                                gene_dict[ens_id] = {
                                     'id': g_id,
+                                    'ens_id':[ens_id],
                                     'chr': chrom,
                                     'gc': gc_content,
                                     'start': start,
                                     'end': end,
                                     'direction': strand,
                                     'go_terms': [],
-                                    'ncbi': ncbi # Used for mapping to kegg pathways.
+                                    'ncbi': ncbi, # Used for mapping to kegg pathways.
+                                    'chrs': [chrom]
                                 }
                                 if len(go_term.split(':')) > 1 and 'GO' in go_term:
-                                    gene_dict[g_id]['go_terms'].append(
+                                    gene_dict[ens_id]['go_terms'].append(
                                         int(go_term.split(':')[1]))
                     hdr = False
                 except Exception as e:
@@ -201,6 +212,8 @@ class Biomart:
                     self.gene_annot_dict[g_id]['chr'] = self.gene_annot_dict[g_id]['chr']
                     gene_rois.append(self.gene_annot_dict[g_id])
 
+
+
         return gene_rois
 
     def add_gene_metadata_to_df(self, df: pd.DataFrame, drop_empty_rows=False) -> pd.DataFrame:
@@ -208,6 +221,7 @@ class Biomart:
         terms = []
         gc_content = []
         ncbi = []
+        ens_ids = []
         for g_id in df['id'].values:
             g = g_id.split('.')[0]
             if self.ens_to_name.get(g) is None:
@@ -215,21 +229,25 @@ class Biomart:
                 terms.append(None)
                 gc_content.append(None)
                 ncbi.append(None)
+                ens_ids.append(None)
             else:
                 gene_info = self.gene_annot_dict[self.ens_to_name.get(g)]
                 names.append(self.ens_to_name.get(g))
                 terms.append(gene_info['go_terms'])
                 gc_content.append(gene_info['gc'])
                 ncbi_saved = gene_info['ncbi']
+                ens_ids.append(gene_info['ens_id'])
                 if ncbi_saved != 'NA':
                     ncbi.append(ncbi_saved)
                 else:
                     ncbi.append(None)
 
         df['gene_id'] = names
+        df['ens_id'] = ens_ids
         df['gc'] = gc_content
         df['go_terms'] = terms
         df['ncbi'] = ncbi
+        print(set(list(df['chr'].values)))
         if drop_empty_rows:
             df = df.dropna()
         return df

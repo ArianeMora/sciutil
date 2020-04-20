@@ -97,3 +97,6 @@ class TestSciUtil(unittest.TestCase):
         df['sample_1'] = [2.88]
         annot_df = self.biomart.build_add_metadata(df, 'hsapiens_gene_ensembl', 'id', self.tmp_dir, gene_ids)
         print(self.biomart.build_roi())
+
+    def test_chr_err(self):
+        gene_dict, ens_to_name = self.biomart.build_gene_annot_dict('/Users/ariane/Documents/code/sciloc2gene/tests/data/gene_info_20200414.tsv')
