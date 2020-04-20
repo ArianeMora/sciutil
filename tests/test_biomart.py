@@ -61,7 +61,7 @@ class TestSciUtil(unittest.TestCase):
         # Now we want to build a dictionary using this information (condensing it for each gene)
         gene_dict, ens_to_name = self.biomart.build_gene_annot_dict(file_path)
         self.assertEqual(ens_to_name.get('ENSG00000116745'), 'RPE65')
-        self.assertEqual(gene_dict['PRG3']['gc'], 49.61)
+        self.assertEqual(gene_dict['ENSG00000156575']['gc'], 49.61)
 
     def test_add_gene_metadata_to_df(self):
         gene_ids = ['ENSG00000156575', 'ENSG00000116745']

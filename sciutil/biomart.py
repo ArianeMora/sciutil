@@ -40,6 +40,8 @@ class Biomart:
 
     def build_gene_info_file(self, organism_lbl: str, gene_ids: None, output_dir: '.', print_info=False) -> Tuple[str, pd.DataFrame]:
         """
+
+        Use ens id as id: https://www.biostars.org/p/119540/
         https://jrderuiter.github.io/pybiomart/
 
         organism_lbl must be one of the datasets available in ensembl i.e. hsapiens_gene_ensembl,
@@ -145,7 +147,7 @@ class Biomart:
                                 ens_to_name[ens_id] = g_id
                                 gene_dict[ens_id] = {
                                     'id': g_id,
-                                    'ens_id':[ens_id],
+                                    'ens_id': ens_id,
                                     'chr': chrom,
                                     'gc': gc_content,
                                     'start': start,
@@ -231,8 +233,8 @@ class Biomart:
                 ncbi.append(None)
                 ens_ids.append(None)
             else:
-                gene_info = self.gene_annot_dict[self.ens_to_name.get(g)]
-                names.append(self.ens_to_name.get(g))
+                gene_info = self.gene_annot_dict[g]
+                names.append(gene_info['id'])
                 terms.append(gene_info['go_terms'])
                 gc_content.append(gene_info['gc'])
                 ncbi_saved = gene_info['ncbi']
@@ -247,7 +249,6 @@ class Biomart:
         df['gc'] = gc_content
         df['go_terms'] = terms
         df['ncbi'] = ncbi
-        print(set(list(df['chr'].values)))
         if drop_empty_rows:
             df = df.dropna()
         return df
