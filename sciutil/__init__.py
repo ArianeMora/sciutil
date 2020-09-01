@@ -9,4 +9,3 @@ __license__ = 'GPL3'
 from sciutil.msg import Msg
 from sciutil.util import SciUtil
 from sciutil.util import SciException
-from sciutil.biomart import Biomart
