@@ -255,3 +255,27 @@ class SciUtil:
 
         """
         return f'{dir_str}{self.dir_sep}' if not dir_str[-1] == self.dir_sep else dir_str
+
+    def to_dir(self, dir_path: str, filename: str):
+        """ Saves me having to import os. """
+        return os.path.join(dir_path, filename)
+
+    def dir_exists_err(self, dir_path: str, throw_err=True):
+        """ Check if a dir exists otherwise throw an error """
+        if os.path.exists(dir_path):
+            msg = f'Path exists: {dir_path}'
+            self.err_p([msg])
+            if throw_err:
+                raise SciException(msg)
+            return True
+        return False
+
+    def dir_notexist_err(self, dir_path: str, throw_err=True):
+        """ Check if a dir doesn't exists otherwise throw an error """
+        if not os.path.exists(dir_path):
+            msg = f'Path exists: {dir_path}'
+            self.err_p([msg])
+            if throw_err:
+                raise SciException(msg)
+            return True
+        return False
