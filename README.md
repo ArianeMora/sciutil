@@ -2,6 +2,7 @@
 
 [![codecov.io](https://codecov.io/github/ArianeMora/sciutil/coverage.svg?branch=master)](https://codecov.io/github/ArianeMora/sciutil?branch=master)
 [![PyPI](https://img.shields.io/pypi/v/sciutil)](https://pypi.org/project/sciutil/)
+[![DOI](https://zenodo.org/badge/253343391.svg)](https://zenodo.org/badge/latestdoi/253343391)
 
 Utility functions for my sci* packages.
 
